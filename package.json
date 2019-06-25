@@ -1,0 +1,23 @@
+{
+  "name": "express-api-server-boilerplate",
+  "version": "1.0.0",
+  "description": "express api server with MongoDB boilerplate",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://ahsankhan1911:alikhan2333@github.com/ahsankhan1911/express-api-server-boilerplate.git"
+  },
+  "keywords": [
+    "boilerplate",
+    "express"
+  ],
+  "author": "Ahsan Khan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahsankhan1911/express-api-server-boilerplate/issues"
+  },
+  "homepage": "https://github.com/ahsankhan1911/express-api-server-boilerplate#readme"
+}
