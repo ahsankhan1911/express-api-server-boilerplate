@@ -1,7 +1,6 @@
 const User = require('./userModel'),
     Exception = require('../../lib/model/Exception'),
     jwtHandler = require('../../lib/jwt');
-// const emailHandler = require('../../lib/email');
 const appUtils = require('../../lib/appUtils')
 const bcryptHandler = require('../../lib/bcrypt')
 
@@ -137,9 +136,6 @@ var editUser = (userData) => {
 
     if(name)
     set.name = name
-
-    // if(email)
-    // set.email = email
 
     if(phone)
     set.phone = phone

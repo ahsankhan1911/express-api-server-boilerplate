@@ -190,5 +190,4 @@ authenticateAccesstoken,
 validateUserLogin,
 validateUserList,
 uploadUserProfilePicture,
-// validateProfileEdit
 }

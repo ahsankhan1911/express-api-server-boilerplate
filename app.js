@@ -51,6 +51,8 @@ app.use(compression());
 //Serving images always from public folder
 app.use('/images', express.static('./public/images'))
 
+// app.set('views', path.join(__dirname, 'public'))
+
 
 //CORS congif
 app.use((req, res, next) => {
@@ -78,7 +80,7 @@ require('./api')(app)
 
 
 app.get('/', (req, res) => {
-  res.send(`${process.env.APP_NAME} API Server`)
+  res.render('index', {APP_NAME: process.env.APP_NAME})
 })
 
 //404
