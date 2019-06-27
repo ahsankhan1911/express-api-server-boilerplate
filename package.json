@@ -5,11 +5,12 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+     "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://ahsankhan1911:alikhan2333@github.com/ahsankhan1911/express-api-server-boilerplate.git"
+    "url": "git+https://github.com/ahsankhan1911/express-api-server-boilerplate.git"
   },
   "keywords": [
     "boilerplate",
