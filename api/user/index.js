@@ -1,3 +1,7 @@
+/* -- Routings --
+    All the routing for module should be written here
+*/
+
 var express = require('express');
 const controller = require('./userController');
 const userMiddleware = require('./userMiddleware') 

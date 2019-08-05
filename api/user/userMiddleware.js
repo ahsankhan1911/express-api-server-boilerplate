@@ -1,3 +1,6 @@
+/* -- API Middlewares --
+    Here we write all the required middleware functions for the module
+*/
 
 const appUtils = require('../../lib/appUtils'),
 _ = require('lodash'),

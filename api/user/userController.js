@@ -1,3 +1,7 @@
+/* -- API Controller Functions --
+    Getting the data from middlewares and providing it to DAOs and handlings responses is done by Controllers
+*/
+
 const responseHandler = require('../../lib/responseHandler');
 const userDoa = require('./userDao');
 

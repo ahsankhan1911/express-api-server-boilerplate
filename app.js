@@ -12,7 +12,10 @@ var compression = require('compression');
 var bodyParser = require('body-parser');
 var app = express();
 var mongoose = require('mongoose');
+var Ddos = require('ddos')
+
 var PORT = process.env.PORT || 5000
+
 console.log(`${process.env.APP_NAME} app starting on ${process.env.NODE_ENV} environment`)
 console.log()
 
@@ -22,7 +25,7 @@ console.log()
  * MongoDB Config
  */
 mongoose.Promise = require('bluebird')
-mongoose.set('debug', process.env.NODE_ENV === 'development' ? true : false );
+// mongoose.set('debug', process.env.NODE_ENV === 'development' ? true : false );
 
 mongoose.connect(`mongodb://localhost:27017/${process.env.DB_NAME}`, { useMongoClient: true }).then((result) => {
 
@@ -80,7 +83,7 @@ require('./api')(app)
 
 
 app.get('/', (req, res) => {
-  res.render('index', {APP_NAME: process.env.APP_NAME})
+  res.send('Express server app !')
 })
 
 //404

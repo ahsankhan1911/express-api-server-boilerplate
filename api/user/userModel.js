@@ -1,9 +1,13 @@
+/* -- DB Model --
+    MongoDB models should be defined here
+*/
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 
 var UserSchema = new Schema({
-  name: {type: String, required: true },
+  name: {type: String },
   password: { type: String, required: true },
   email : {type : String, required: true, unique: true},
   address: {type:String },

@@ -1,3 +1,8 @@
+/* -- Database Access Object --
+    Here we write all the function related to database. 
+    There should be only one file to access DB per module.
+*/
+
 const User = require('./userModel'),
     Exception = require('../../lib/model/Exception'),
     jwtHandler = require('../../lib/jwt');
