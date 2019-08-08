@@ -11,7 +11,7 @@ const userRouter = express.Router();
 
 userRouter.route('/create').post( [userMiddleware.authenticateAdminAccesstoken, userMiddleware.validateUserCreate], controller.createUser)
 userRouter.route('/action/:id/:value').post([userMiddleware.authenticateAdminAccesstoken], controller.userAction)
-userRouter.route('/edit').post([userMiddleware.authenticateAccesstoken, userMiddleware.uploadUserProfilePicture],controller.editUser)
+userRouter.route('/edit').post([userMiddleware.authenticateAccesstoken, userMiddleware.userProfilePictureUpload],controller.editUser)
 userRouter.route('/edit/:id').post([userMiddleware.authenticateAdminAccesstoken, userMiddleware.uploadUserProfilePicture],controller.editUserAdmin)
 
 userRouter.route('/login').post([userMiddleware.validateUserLogin],controller.userLogin)

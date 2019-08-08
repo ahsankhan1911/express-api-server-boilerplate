@@ -8,14 +8,15 @@ userDao = require('./userDao'),
 customException = require('../../lib/customException'),
 Exception = require('../../lib/model/Exception'),
 jwtHandler  =require('../../lib/jwt'),
-
-constant = require('../../lib/constant');
-const {uploadForUser} = require('../../lib/multer')
-
-
+constant = require('../../lib/constant'),
+ {singleUploader} = require('../../lib/multer'),
+ uploadForUser =   singleUploader('public/images/users', 'name')
 
 
-var uploadUserProfilePicture =   uploadForUser.single('file')
+
+
+
+var userProfilePictureUpload =  uploadForUser('file')
 
 
 var validateUserCreate = function(request, response, next){
@@ -192,5 +193,5 @@ authenticateAdminAccesstoken,
 authenticateAccesstoken,
 validateUserLogin,
 validateUserList,
-uploadUserProfilePicture,
+userProfilePictureUpload,
 }
