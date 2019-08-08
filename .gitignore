@@ -62,3 +62,6 @@ typings/
 
 #DB backup DIR
 db_backup/
+
+#Appilcation Logs
+app.log

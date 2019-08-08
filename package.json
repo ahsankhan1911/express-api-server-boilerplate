@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "create-admin": "node ./lib/scripts/createAdmin.js"
+    "create-admin": "node ./lib/scripts/createAdmin.js",
+    "db_backup_cron": "node ./lib/scripts/db_backup_cron.js"
   },
   "engines": {
     "node": "10.16.1",
