@@ -14,10 +14,10 @@ var UserSchema = new Schema({
   phone: {type: String},
   profilePicture: { type: String ,default:  '/images/default_user.jpeg'},
   isActive: {type: Boolean, default: true},
-  accountType: {type: String, enum: ['employee', 'admin'], default: 'employee'}
+  accountType: {type: String, enum: ['admin', 'tuner' , 'buyer'], required: true}
   
 },{
-  versionKey:false,
+  versionKey:false, 
   timestamps:true
 });
 

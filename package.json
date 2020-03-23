@@ -1,5 +1,5 @@
 {
-  "name": "express-api-server-boilerplate",
+  "name": "engio-backend",
   "version": "1.0.0",
   "description": "express api server with MongoDB boilerplate",
   "main": "app.js",
@@ -12,8 +12,8 @@
   },
   "engines": {
     "node": "10.16.1",
-    "npm": "6.9.2" 
-  },  
+    "npm": "6.9.2"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ahsankhan1911/express-api-server-boilerplate.git"

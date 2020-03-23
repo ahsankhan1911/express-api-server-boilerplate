@@ -1,0 +1,101 @@
+/**
+ * Engio DB Model JSON
+ * 
+ * There will be 4 tables for this app:
+ * 1) users (for tuners, buyers, owner)
+ * 2) map_files (for storing path to map files)
+ * 3) transactions (when buyer made a payment for map files)
+ * 4) reviews (for buyers comments and rating)
+ */
+
+//1) users
+const users = {
+    "_id": { type: "mongoose.Schema.Types.ObjectId" },
+    "username": { type: String, required: true, unique: true },
+    "email": { type: String, required: true, unique: true },
+    "phone": { type: String, required: true },
+    "fullname": { type: String },
+    "description": { type: String },
+    "braintree_client_token": { type: String, required: true },
+    "bank_details": {
+        "bank_name": { type: String },
+        "account_number": { type: String },
+        "bank_sord_code": { type: String }
+    },
+    "business_details": {
+        "business_name": { type: String },
+        "business_reg_no": { type: String },
+        "registered_address": { type: String },
+        "vat_registration": { type: Number }
+
+    },
+    "map_files_created": [
+        { type: "mongoose.Schema.Types.ObjectId", default: [], ref: 'Map_file' }
+    ]
+    ,
+    "map_files_bought": [
+        {
+            "map_file_id": { type: "mongoose.Schema.Types.ObjectId", ref: 'Map_file' },
+            "transaction_id": { type: "mongoose.Schema.Types.ObjectId", ref: 'Transaction' }
+
+        }
+
+    ],
+    "roles": [{ type: String, required: true, enums: ['admin', 'buyer', 'tuner'] }],
+    "is_active": { type: Boolean, default: true },
+    "is_deleted": { type: Boolean, default: false },
+    "created_at": { type: Date, default: Date.now },
+    "updated_at": { type: Date, default: Date.now }
+}
+
+//2) map_files 
+const map_files = {
+    "_id": { type: "mongoose.Schema.Types.ObjectId" },
+    "make": { type: String, required: true },
+    "model": { type: String, required: true },
+    "build_ECU_type": { type: String, required: true },
+    "engine_BHP": { type: Number, required: true },
+    "hardware_number": { type: String, required: true },
+    "price": { type: Number, required: true },
+    "description": { type: String },
+    "created_by": { type: "mongoose.Schema.Types.ObjectId", ref: "User" },
+    "bought_by": [
+        {
+            "user_id": { type: "mongoose.Schema.Types.ObjectId", ref: 'User' },
+            "transaction_id": { type: "mongoose.Schema.Types.ObjectId", ref: 'Transaction' }
+
+        }
+    ],
+    "reviews": [
+        { type: "mongoose.Schema.Types.ObjectId", ref: "Review" }
+    ],
+    "is_active": { type: Boolean, default: true },
+    "is_deleted": { type: Boolean, default: false },
+    "created_at": { type: Date, default: Date.now },
+    "updated_at": { type: Date, default: Date.now }
+
+}
+
+//3) transactions
+const transactions = {
+    "_id": { type: "mongoose.Schema.Types.ObjectId" },
+    "amount": { type: Number, required: true },
+    "payment_method_nonce": { type: String, required: true },
+    "made_by": { type: "mongoose.Schema.Types.ObjectId", ref: "User", required: true },
+    "is_deleted": { type: Boolean, default: false },
+    "created_at": { type: Date, default: Date.now },
+    "updated_at": { type: Date, default: Date.now }
+}
+
+
+//4) reviews
+const reviews = {
+    "_id": { type: "mongoose.Schema.Types.ObjectId" },
+    "title": { type: String, required: true },
+    "description": { type: String, default: null },
+    "given_by": { type: "mongoose.Schema.Types.ObjectId", ref: "User", required: true },
+    "map_file": { type: "mongoose.Schema.Types.ObjectId", ref: "Map_file", required: true },
+    "is_deleted": { type: Boolean, default: false },
+    "created_at": { type: Date, default: Date.now },
+    "updated_at": { type: Date, default: Date.now }
+}
