@@ -4,12 +4,12 @@
 
 var express = require('express');
 const controller = require('./map_file.controller');
-const userMiddleware = require('./userMiddleware')
+const userMiddleware = require('../user/user.middleware')
 
 const mapfileRouter = express.Router();
 
 
-mapfileRouter.route('/create').post([userMiddleware.authenticateAdminAccesstoken, userMiddleware.validateUserCreate], controller.createUser)
+mapfileRouter.route('/create').post([userMiddleware.authenticateAccesstoken, userMiddleware.validateUserCreate], controller.createUser)
 mapfileRouter.route('/action/:id/:value').post([userMiddleware.authenticateAdminAccesstoken], controller.userAction)
 mapfileRouter.route('/edit').post([userMiddleware.authenticateAccesstoken, userMiddleware.userProfilePictureUpload], controller.editUser)
 mapfileRouter.route('/edit/:id').post([userMiddleware.authenticateAdminAccesstoken, userMiddleware.uploadUserProfilePicture], controller.editUserAdmin)

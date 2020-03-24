@@ -6,21 +6,19 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 
-var UserSchema = new Schema({
-  name: {type: String },
-  password: { type: String, required: true },
-  email : {type : String, required: true, unique: true},
-  address: {type:String },
-  phone: {type: String},
-  profilePicture: { type: String ,default:  '/images/default_user.jpeg'},
-  isActive: {type: Boolean, default: true},
-  accountType: {type: String, enum: ['admin', 'tuner' , 'buyer'], required: true}
-  
+var TransactionSchema = new Schema({
+  "amount": { type: Number, required: true },
+  "payment_method_nonce": { type: String, required: true },
+  "made_by": { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  "is_deleted": { type: Boolean, default: false }
 },{
   versionKey:false, 
-  timestamps:true
+  timestamps:{
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
+  }
 });
 
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Transaction', TransactionSchema);
 

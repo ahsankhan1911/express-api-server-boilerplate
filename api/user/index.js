@@ -3,20 +3,23 @@
 */
 
 var express = require('express');
-const controller = require('./userController');
-const userMiddleware = require('./userMiddleware') 
+const controller = require('./user.controller');
+const userMiddleware = require('./user.middleware') 
 
 const userRouter = express.Router();
 
-
-userRouter.route('/create').post( [userMiddleware.authenticateAdminAccesstoken, userMiddleware.validateUserCreate], controller.createUser)
-userRouter.route('/action/:id/:value').post([userMiddleware.authenticateAdminAccesstoken], controller.userAction)
-userRouter.route('/edit').post([userMiddleware.authenticateAccesstoken, userMiddleware.userProfilePictureUpload],controller.editUser)
-userRouter.route('/edit/:id').post([userMiddleware.authenticateAdminAccesstoken, userMiddleware.uploadUserProfilePicture],controller.editUserAdmin)
-
+//user side
+userRouter.route('/register').post(userMiddleware.validateUserCreate, controller.registerUser)
 userRouter.route('/login').post([userMiddleware.validateUserLogin],controller.userLogin)
+userRouter.route('/edit').post([userMiddleware.authenticateAccesstoken],controller.editUser)
+userRouter.route('/details').get([userMiddleware.authenticateAccesstoken], controller.userDetails)
+
+
+//admin side
+userRouter.route('/create').post( [userMiddleware.authenticateAccesstoken, userMiddleware.validateUserCreate], controller.createUser)
 userRouter.route('/details/:id').get([userMiddleware.authenticateAdminAccesstoken],controller.userDetails)
 userRouter.route('/list/:pageNo/:limit').get([userMiddleware.authenticateAdminAccesstoken],controller.usersList)
-
+userRouter.route('/edit/:id').post([userMiddleware.authenticateAdminAccesstoken],controller.editUserAdmin)
+userRouter.route('/action/:id/:value').post([userMiddleware.authenticateAdminAccesstoken], controller.userAction)
 
 module.exports = userRouter

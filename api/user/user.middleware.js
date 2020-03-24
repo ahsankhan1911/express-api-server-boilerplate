@@ -4,23 +4,22 @@
 
 const appUtils = require('../../lib/appUtils'),
 _ = require('lodash'),
-userDao = require('./userDao'),
 customException = require('../../lib/customException'),
 Exception = require('../../lib/model/Exception'),
 jwtHandler  =require('../../lib/jwt'),
-constant = require('../../lib/constant'),
- {singleUploader} = require('../../lib/multer'),
- uploadForUser =   singleUploader('public/images/users', 'name')
+constant = require('../../lib/constant');
+//  {singleUploader} = require('../../lib/multer'),
+//  uploadForUser =   singleUploader('public/images/users', 'name')
 
 
 
 
 
-var userProfilePictureUpload =  uploadForUser('file')
+// var userProfilePictureUpload =  uploadForUser('file')
 
 
 var validateUserCreate = function(request, response, next){
-let {name, email , password} = request.body;
+let {name, email , password, fullname} = request.body;
 var errors = [];
 
 if(_.isEmpty(name)){
@@ -37,6 +36,9 @@ if(_.isEmpty(password)){
   errors.push({fieldName:'password', message:"Please enter password"});
 }
 
+if(_.isEmpty(fullname)){
+  errors.push({fieldName:'fullname', message:"Please enter fullname"});
+}
 if(errors && errors.length > 0){
   validationError(errors, next);
 }
@@ -94,18 +96,16 @@ var authenticateAdminAccesstoken = (request, response,next) => {
   let accessToken = request.get('Authorization')
   if(accessToken) {
     jwtHandler.verifyAccessToken(accessToken).then((result) => {
-      return  userDao.verifyUserPayloadId(result.payload).then((user) => {
-        if(user) {
-            if(user.accountType !== 'admin') {
+        if(result) {
+            if(!result.roles.find((d) => d == 'admin')) {
                 return next(new Exception(2, constant.MESSAGES.UNAUTHORIZED_ACCESS, null, 401));
             }
-          request.user =  user
+          request.user =  result
            return next()
         }
         else {
           return next(new Exception(2, "No user found on this token", null, 401));
         }
-      })
         
        
     })
@@ -140,15 +140,13 @@ var authenticateAccesstoken = (request, response,next) => {
   let accessToken = request.get('Authorization')
   if(accessToken) {
     jwtHandler.verifyAccessToken(accessToken).then((result) => {
-      return  userDao.verifyUserPayloadId(result.payload).then((user) => {
-        if(user) {
-          request.user =  user
+        if(result) {
+          request.user =  result
           next()
         }
         else {
           return next(new Exception(2, "No user found on this token", null, 401));
         }
-      })
         
        
     })
@@ -193,5 +191,5 @@ authenticateAdminAccesstoken,
 authenticateAccesstoken,
 validateUserLogin,
 validateUserList,
-userProfilePictureUpload,
+// userProfilePictureUpload,
 }

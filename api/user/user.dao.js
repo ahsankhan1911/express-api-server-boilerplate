@@ -3,7 +3,7 @@
     There should be only one file to access DB per module.
 */
 
-const User = require('./userModel'),
+const User = require('./user.model'),
     Exception = require('../../lib/model/Exception'),
     jwtHandler = require('../../lib/jwt');
 const appUtils = require('../../lib/appUtils')
@@ -32,23 +32,23 @@ var userLogin = (userData) => {
     let query = { email: { '$regex': regex } }
     return User.findOne(query).then((user) => {
         if (user) {
-
             //Password Auth
             let password  = bcryptHandler.comparePassword(userData.password, user.password)
             if(password) {
 
-                if (user.isActive === false) {
+                if (user.is_active === false) {
                     throw new Exception(3, "You have been blocked by Admin", null , 403)
                 }
 
                     let payload = {
                         _id: user._id,
                         email: user.email,
-                        accountType: user.accountType
+                        roles: user.roles
+
                     }
 
                     return jwtHandler.generateAccessToken(payload).then((result) => {
-                        return { accessToken: result, name: user.name, email:user.email, profilePicture: user.profilePicture, accountType: user.accountType }
+                        return { access_token: result, fullname: user.fullname, username: user.username ,email:user.email, roles: user.roles }
                     })
             }
 

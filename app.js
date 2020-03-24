@@ -83,7 +83,7 @@ require('./api')(app)
 
 
 app.get('/', (req, res) => {
-  res.send('Express server app !')
+  res.send('Engio.io API server')
 })
 
 //404

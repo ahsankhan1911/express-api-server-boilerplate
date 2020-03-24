@@ -3,20 +3,37 @@
 */
 
 const responseHandler = require('../../lib/responseHandler');
-const userDoa = require('./userDao');
+const userDoa = require('./user.dao');
 
+exports.registerUser = (request, response) => {
+    let { username,email,fullname,phone,password } = request.body
 
+    userDoa.createUser({ username,email,fullname,phone,password}).then((result) => {
+        responseHandler.sendSuccess(response, {
+            _id: result._id,
+            username: result.username,
+            email: result.email,
+            fullname: result.fullname,
+            phone: result.phone,
+        }, "User registered successfully")
+    }).catch((error) => {
+
+        responseHandler.sendError(response, error)
+    })
+
+}
+
+//For Admin
 exports.createUser = (request, response) => {
     let { name, email, password, phone, address } = request.body
 
     userDoa.createUser({ name, email, password, phone, address }).then((result) => {
         responseHandler.sendSuccess(response, {
-            userId: result._id,
+            _id: result._id,
             name: result.name,
             email: result.email,
             phone: result.phone,
             address: result.address,
-            profilePicture: result.profilePicture
         }, "User created successfully")
     }).catch((error) => {
 
