@@ -25,9 +25,12 @@ console.log()
  * MongoDB Config
  */
 mongoose.Promise = require('bluebird')
-// mongoose.set('debug', process.env.NODE_ENV === 'development' ? true : false );
 
-mongoose.connect(`mongodb://localhost:27017/${process.env.DB_NAME}`, { useMongoClient: true }).then((result) => {
+mongoose.set('debug', process.env.NODE_ENV === 'development' ? true : false );
+
+const CONNECTION_URI = process.env.DB_CONNECTION_URI || `mongodb://localhost:27017/${process.env.DB_NAME}`
+
+mongoose.connect(CONNECTION_URI, {  useMongoClient: true }).then((result) => {
 
   console.log("Connected To MongoDB on :", {
     Database: result.name,

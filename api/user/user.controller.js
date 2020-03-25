@@ -6,11 +6,10 @@ const responseHandler = require('../../lib/responseHandler');
 const userDoa = require('./user.dao');
 
 exports.registerUser = (request, response) => {
-    let { username,email,fullname,phone,password } = request.body
+    let { username,email,fullname,phone,password, braintree_client_token, roles} = request.body
 
-    userDoa.createUser({ username,email,fullname,phone,password}).then((result) => {
+    userDoa.createUser({ username,email,fullname,phone,password, braintree_client_token, roles}).then((result) => {
         responseHandler.sendSuccess(response, {
-            _id: result._id,
             username: result.username,
             email: result.email,
             fullname: result.fullname,
@@ -55,6 +54,18 @@ exports.userLogin = (request, response) => {
 }
 
 exports.userDetails = (request, response) => {
+    let { _id } = request.user
+    userDoa.userDetails({ _id }).then((result) => {
+        responseHandler.sendSuccess(response, result, !result ? "No record found" : "Record found successfully")
+
+    }).catch((error) => {
+        console.log(error)
+        responseHandler.sendError(response, error)
+    })
+
+}
+
+exports.userDetailsAdmin = (request, response) => {
     let { id } = request.params
     userDoa.userDetails({ id }).then((result) => {
         responseHandler.sendSuccess(response, result, !result ? "No record found" : "Record found successfully")
@@ -97,15 +108,11 @@ exports.usersList = (request, response) => {
     })
 }
 
-exports.editUser = (request, response) => {
+exports.updateUser = (request, response) => {
     let { _id } = request.user
-    let { name, email, phone, address } = request.body
-    let file = request.file
+    let { fullname, phone, business_details,bank_details, description } = request.body
 
-    if (file)
-        var profilePicture = `/images/users/${file.filename}`
-
-    userDoa.editUser({ name, email, phone, address, profilePicture, _id }).then((result) => {
+    userDoa.updateUser({_id,  fullname, phone, business_details,bank_details, description}).then((result) => {
 
         responseHandler.sendSuccess(response, result, result ? "Record updated successfully !" : "No record updated !")
 

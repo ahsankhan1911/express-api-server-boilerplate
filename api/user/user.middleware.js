@@ -19,12 +19,10 @@ constant = require('../../lib/constant');
 
 
 var validateUserCreate = function(request, response, next){
-let {name, email , password, fullname} = request.body;
+let {email , password, fullname,braintree_client_token , roles} = request.body;
 var errors = [];
 
-if(_.isEmpty(name)){
-  errors.push({fieldName:'name', message:"Please enter name"});
-}
+
 email = _.toLower(email);
 if(_.isEmpty(email)){
   errors.push({fieldName:'email', message:"Please enter email"});
@@ -38,6 +36,14 @@ if(_.isEmpty(password)){
 
 if(_.isEmpty(fullname)){
   errors.push({fieldName:'fullname', message:"Please enter fullname"});
+}
+
+if(_.isEmpty(braintree_client_token)){
+  errors.push({fieldName:'braintree_client_token', message:"Please provide braintree client token"});
+}
+
+if(!roles.length){
+  errors.push({fieldName:'roles', message:"Please provide role of the user"});
 }
 if(errors && errors.length > 0){
   validationError(errors, next);
@@ -137,11 +143,11 @@ var authenticateAdminAccesstoken = (request, response,next) => {
 }
 
 var authenticateAccesstoken = (request, response,next) => {
-  let accessToken = request.get('Authorization')
+  let accessToken = request.get('Authorization').replace('Bearer ', '')
   if(accessToken) {
     jwtHandler.verifyAccessToken(accessToken).then((result) => {
         if(result) {
-          request.user =  result
+          request.user =  result.payload
           next()
         }
         else {

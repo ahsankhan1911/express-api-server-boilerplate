@@ -99,7 +99,7 @@ if(userData.searchKey){
 
 
 var userDetails = (userData) => {
-    return User.findById(userData.id).select('name email phone address profilePicture')
+    return User.findById(userData._id).select('name email phone fullname description bank_details business_details')
 }
 
 var editUserAdmin =  (userData) => {
@@ -131,25 +131,28 @@ var editUserAdmin =  (userData) => {
     return User.findByIdAndUpdate(id, udpate,options )
 }
 
-var editUser = (userData) => {
-    let { name,email ,phone,address , profilePicture, _id }= userData
+var updateUser = (userData) => {
+    let { _id , fullname, phone, business_details,bank_details, description }= userData
 
     let set = {}
 
     let udpate = {'$set': set}
-    let options = {new: true, select: {name:1, email:1,phone:1,city:1, address:1 ,profilePicture:1}}
+    let options = {new: true, select: {fullname:1, email:1,phone:1,business_details:1, bank_details:1 ,description:1}}
 
-    if(name)
-    set.name = name
+    if(fullname)
+    set.fullname = fullname
 
     if(phone)
     set.phone = phone
 
-    if(address)
-    set.address = address
+    if(business_details)
+    set.business_details = business_details
 
-    if(profilePicture)
-    set.profilePicture = profilePicture
+    if(bank_details)
+    set.bank_details = bank_details
+
+    if(description)
+    set.description = description
 
     return User.findByIdAndUpdate(_id, udpate,options )
 }
@@ -164,7 +167,7 @@ var userCount = () => {
     userAction,
     usersList,
     userDetails,
-    editUser,
-    editUserAdmin
+    editUserAdmin,
+    updateUser
 
 }
