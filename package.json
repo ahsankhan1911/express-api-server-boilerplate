@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/ahsankhan1911/express-api-server-boilerplate#readme",
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.21.1",
     "bcrypt": "^3.0.4",
     "bluebird": "^3.5.3",
     "body-parser": "^1.17.1",
